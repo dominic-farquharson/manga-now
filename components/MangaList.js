@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
-import Manga from './Manga';
+import MangaListItem from './MangaListItem';
 
 const MangaList = props => {
   // Specifying key to use for each component
@@ -16,7 +16,9 @@ const MangaList = props => {
       style={{ width: '100%' }}
       keyExtractor={keyExtractor}
       renderItem={({item}) => (
-        <Manga 
+        <MangaListItem
+          toggleMangaView={props.toggleMangaView}
+          data={item}
           name={item.t} 
           image={item.im? `https://cdn.mangaeden.com/mangasimg/${item.im}` : 'https://placehold.it/100x300'}
         />
