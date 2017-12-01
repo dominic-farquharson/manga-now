@@ -1,34 +1,41 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import loading from './assets/loading.gif';
-
-const Heading = props => {
-  return (
-    <Text style={styles.heading}>
-      {props.content}
-    </Text>
-  )
-}
-
+import Heading from './components/Heading';
+import MangaList from './components/MangaList';
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
       manga: null,
-      loaded: false
+      loaded: false,
+      page: 0 // change page
     }
 
     // binding
     this.displayMangas = this.displayMangas.bind(this);
   }
   componentDidMount() {
-    
+    const url = 'https://www.mangaeden.com/api/list/0/?p=1';
+    fetch(url)
+      .then(res => {
+        if(!res.ok) throw Error(res.statusText);
+        return res.json()
+      })
+      .then(res => {
+        this.setState({
+          manga: res.manga,
+          loaded: true
+        })
+      })
+      .catch(err => console.log('err fetching ', err))
+
   }
 
   displayMangas() {
     return this.state.loaded?
-      <p>Data</p> 
+      <MangaList data={this.state.manga.slice(0, 30)} />
       : <Image source={loading} style={styles.loading} />
   }
 
@@ -53,10 +60,4 @@ const styles = StyleSheet.create({
     // width: 50,
     flex:.5
   },
-  heading: {
-    color: 'white',
-    fontSize: 25,
-    marginTop: 20,
-    marginBottom: 20
-  }
 });
