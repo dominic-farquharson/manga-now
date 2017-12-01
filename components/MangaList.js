@@ -11,11 +11,14 @@ const MangaList = props => {
   return (
     <FlatList 
       data={props.data}
+      numColumns={2}
+      contentContainerStyle={{justifyContent: 'center'}}
+      style={{ width: '100%' }}
       keyExtractor={keyExtractor}
       renderItem={({item}) => (
         <Manga 
           name={item.t} 
-          image={`https://cdn.mangaeden.com/mangasimg/${item.im}`}
+          image={item.im? `https://cdn.mangaeden.com/mangasimg/${item.im}` : 'https://placehold.it/100x300'}
         />
       )}   
     />
