@@ -6,6 +6,7 @@
 - React
 - React Native
 - Redux (coming soon...)
+- MangaEden API ([link](http://www.mangaeden.com/api/))
 
 ## To do 
 
