@@ -59,7 +59,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {!this.state.manga? <Heading content="Manga List" /> : null}
+        {!this.state.manga? <Heading content="Manga Now" /> : null}
         {this.displayMangas()}
       </View>
     );

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Heading from '../Heading';
 import ViewChapters from './ViewChapters';
-import { ScrollView, Text, Button, Image, FlatList, Alert, View } from 'react-native';
+import { ScrollView, Text, Button, Image, FlatList, Alert, View, StyleSheet } from 'react-native';
 
 class Manga extends Component {
   constructor() {
@@ -73,7 +73,7 @@ class Manga extends Component {
         <FlatList
           data={this.state.data.chapters}
           keyExtractor={item => item[3]} // chapter's id
-          renderItem={({item}) => <Text onPress={()=> this.fetchChapters(item[3])} style={{color: 'white'}}> Chapter {item[0]}</Text>}
+          renderItem={({item}) => <Text onPress={()=> this.fetchChapters(item[3])} style={styles.chapterListItem}> Chapter {item[0]}</Text>}
         />
       )
     } else if(this.state.viewChapters) {
@@ -86,7 +86,12 @@ class Manga extends Component {
   render() {
   
     return (
-      <ScrollView>
+      <ScrollView
+        // called when content inside changes
+        onContentSizeChange={(contentWidth, contentHeight) => {
+          console.log('content width height', contentWidth, contentHeight)
+        }}
+      >
         <Heading content={this.props.data.t} /> 
         {!this.state.viewChapters? <Image 
           source={{uri: `https://cdn.mangaeden.com/mangasimg/${this.props.data.im}`}}
@@ -101,6 +106,15 @@ class Manga extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  chapterListItem: {
+    color: 'white',
+    padding: 6,
+    borderTopWidth: 1,
+    borderColor: 'white'
+  }
+})
 
 
 export default Manga;
