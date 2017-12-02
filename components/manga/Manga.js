@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Heading from '../Heading';
-import { View, Text, Button } from 'react-native';
+import { ScrollView, Text, Button, Image, FlatList, Alert, View } from 'react-native';
 
 class Manga extends Component {
   constructor() {
@@ -9,6 +9,9 @@ class Manga extends Component {
       data: null,
       loaded: false
     }
+
+    this.chapters = this.chapters.bind(this);
+    this.content = this.content.bind(this);
   }
 
   componentDidMount() {
@@ -34,14 +37,35 @@ class Manga extends Component {
     }
   }
 
+  chapters() {
+    if(this.state.loaded) {
+      return (
+        <FlatList
+          data={this.state.data.chapters}
+          keyExtractor={item => item[3]} // chapter's id
+          renderItem={({item}) => <Text onPress={()=> Alert.alert(item[0])} style={{color: 'white'}}> Chapter {item[0]}</Text>}
+        />
+      )
+    } else {
+      return <Text style={{color: 'white'}}>Loading...</Text>;
+    }
+  }
+
   render() {
   
     return (
-      <View>
+      <ScrollView>
         <Heading content={this.props.data.t} /> 
-        {this.content()}
-        <Button onPress={this.props.toggleMangaView} title="Close" color="white" />  
-      </View>
+        <Image 
+          source={{uri: `https://cdn.mangaeden.com/mangasimg/${this.props.data.im}`}}
+          style={{width: 100, height: 300}}
+        />
+        <View>
+          {this.content()}
+          {this.chapters()}
+        </View>
+        <Button onPress={this.props.toggleMangaView} title="Close" />  
+      </ScrollView>
     )
   }
 }
