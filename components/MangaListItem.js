@@ -13,7 +13,7 @@ const MangaListItem = props => {
           {props.name}
         </Text>
         <Image 
-          source={{url: props.image}}
+          source={{uri: props.image}}
           style={styles.cover}
           />
       </View>
