@@ -11,3 +11,6 @@
 
 - Render images properly when device orientation changes
 - Scroll to top when chapter image is changed
+- user auth
+- add favorites
+- comment section for manga
